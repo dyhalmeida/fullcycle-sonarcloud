@@ -6,4 +6,4 @@ console.log(sum(5, 3));
 
 console.log(multiply(5, 3));
 
-console.log(divide(5, 3));
+console.log(divide(8, 2));
