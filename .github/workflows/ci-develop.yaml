@@ -1,0 +1,33 @@
+name: CI Develop
+
+on:
+  pull_request:
+    branches:
+      - develop
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Bun JS
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.1.32
+
+      - name: Install Dependencies
+        run: bun install
+
+      - name: Run Tests
+        run: bun run test:coverage
+
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
